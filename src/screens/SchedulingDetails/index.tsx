@@ -43,9 +43,23 @@ import {
   RentalPriceTotal,
 } from "./styles";
 import { RFValue } from "react-native-responsive-fontsize";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 
 export function SchedulingDetails() {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const theme = useTheme();
+
+  function handleOpenConfirmation() {
+    navigation.navigate("Confirmation");
+  }
+
+  function handleBackScheduling() {
+    navigation.navigate("Scheduling");
+  }
   return (
     <Container>
       <StatusBar
@@ -54,7 +68,7 @@ export function SchedulingDetails() {
         backgroundColor="transparent"
       />
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={handleBackScheduling} />
       </Header>
 
       <CarImages>
@@ -121,7 +135,11 @@ export function SchedulingDetails() {
       </Content>
 
       <Footer>
-        <Button title="Alugar Agora" color={theme.colors.success} />
+        <Button
+          title="Alugar Agora"
+          color={theme.colors.success}
+          onPress={handleOpenConfirmation}
+        />
       </Footer>
     </Container>
   );

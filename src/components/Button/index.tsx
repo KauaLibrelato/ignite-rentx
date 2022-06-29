@@ -6,12 +6,11 @@ import { Container, Title } from "./styles";
 interface Props extends RectButtonProps {
   title: string;
   color?: string;
-  //   onPress: () => void;
 }
 
 export function Button({ title, color, ...rest }: Props) {
   return (
-    <Container {...rest} color={color}>
+    <Container activeOpacity={0.8} {...rest} color={color}>
       <Title>{title}</Title>
     </Container>
   );

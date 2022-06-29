@@ -1,4 +1,5 @@
 import React from "react";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import { RFValue } from "react-native-responsive-fontsize";
 
 import EnergySvg from "../../assets/energy.svg";
@@ -25,13 +26,14 @@ interface CarProps {
   thumbnail: string;
 }
 
-interface Props {
+interface Props extends TouchableOpacityProps {
   data: CarProps;
+  onPress: () => void;
 }
 
-export function CarCard({ data }: Props) {
+export function CarCard({ data, onPress, ...rest }: Props) {
   return (
-    <Container>
+    <Container onPress={onPress} {...rest}>
       <Details>
         <Brand>{data.brand}</Brand>
         <Model>{data.model}</Model>

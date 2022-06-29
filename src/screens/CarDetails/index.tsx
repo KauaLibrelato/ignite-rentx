@@ -1,6 +1,11 @@
 import React from "react";
 import { StatusBar } from "react-native";
 import { useTheme } from "styled-components";
+import {
+  ParamListBase,
+  NavigationProp,
+  useNavigation,
+} from "@react-navigation/native";
 
 import SpeedSvg from "../../assets/speed.svg";
 import AccelerationSvg from "../../assets/acceleration.svg";
@@ -33,7 +38,15 @@ import {
 } from "./styles";
 
 export function CarDetails() {
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const theme = useTheme();
+
+  function handleOpenScheduling() {
+    navigation.navigate("Scheduling");
+  }
+  function handleBackToHome() {
+    navigation.navigate("Home");
+  }
   return (
     <Container>
       <StatusBar
@@ -42,7 +55,7 @@ export function CarDetails() {
         backgroundColor="transparent"
       />
       <Header>
-        <BackButton onPress={() => {}} />
+        <BackButton onPress={handleBackToHome} />
       </Header>
 
       <CarImages>
@@ -81,7 +94,10 @@ export function CarDetails() {
       </Content>
 
       <Footer>
-        <Button title="Escolher período do aluguel" />
+        <Button
+          title="Escolher período do aluguel"
+          onPress={handleOpenScheduling}
+        />
       </Footer>
     </Container>
   );

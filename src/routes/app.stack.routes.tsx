@@ -15,7 +15,6 @@ export function AppStackRoutes() {
       screenOptions={{
         headerShown: false,
       }}
-      initialRouteName="Home"
     >
       <Screen name="Home" component={Home} />
 
