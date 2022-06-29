@@ -1,6 +1,5 @@
 import React from "react";
 import { ThemeProvider } from "styled-components";
-import { CarDetails } from "./src/screens/CarDetails";
 import {
   useFonts,
   Inter_400Regular,
@@ -14,6 +13,7 @@ import {
 import theme from "./src/styles/theme";
 import AppLoading from "expo-app-loading";
 import { LogBox } from "react-native";
+import { Routes } from "./src/routes";
 
 LogBox.ignoreLogs([
   "expo-app-loading is deprecated in favor of expo-splash-screen",
@@ -33,7 +33,7 @@ export default function App() {
   } else {
     return (
       <ThemeProvider theme={theme}>
-        <CarDetails />
+        <Routes />
       </ThemeProvider>
     );
   }
