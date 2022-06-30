@@ -1,18 +1,13 @@
 import React from "react";
 import { StatusBar } from "react-native";
-import { useTheme } from "styled-components";
 import {
   ParamListBase,
   NavigationProp,
   useNavigation,
+  useRoute,
 } from "@react-navigation/native";
 
-import SpeedSvg from "../../assets/speed.svg";
-import AccelerationSvg from "../../assets/acceleration.svg";
-import ForceSvg from "../../assets/force.svg";
-import EnergySvg from "../../assets/energy.svg";
-import ExchangeSvg from "../../assets/exchange.svg";
-import PeopleSvg from "../../assets/people.svg";
+import { getAccessoryIcon } from "../../utils/getAccessoriesIcon";
 
 import { BackButton } from "../../components/BackButton";
 import { ImageSlider } from "../../components/ImageSlider";
@@ -36,16 +31,23 @@ import {
   About,
   Footer,
 } from "./styles";
+import { CarDTO } from "../../dtos/carDTOS";
+
+interface Params {
+  car: CarDTO;
+}
 
 export function CarDetails() {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
-  const theme = useTheme();
+  const route = useRoute();
+
+  const { car } = route.params as Params;
 
   function handleOpenScheduling() {
-    navigation.navigate("Scheduling");
+    navigation.navigate("Scheduling", { car });
   }
-  function handleBackToHome() {
-    navigation.navigate("Home");
+  function handleBack() {
+    navigation.goBack();
   }
   return (
     <Container>
@@ -55,42 +57,37 @@ export function CarDetails() {
         backgroundColor="transparent"
       />
       <Header>
-        <BackButton onPress={handleBackToHome} />
+        <BackButton onPress={handleBack} />
       </Header>
 
       <CarImages>
-        <ImageSlider
-          imagesUrl={["https://www.pngmart.com/files/1/Audi-RS5-Red-PNG.png"]}
-        />
+        <ImageSlider imagesUrl={car.photos} />
       </CarImages>
 
       <Content>
         <Details>
           <Description>
-            <Brand>AUDI</Brand>
-            <Model>RS 5 Coupé</Model>
+            <Brand>{car.brand}</Brand>
+            <Model>{car.name}</Model>
           </Description>
 
           <Price>
-            <Period>AO DIA</Period>
-            <Amount>R$ 120</Amount>
+            <Period>{car.rent.period}</Period>
+            <Amount>{`R$ ${car.rent.price}`}</Amount>
           </Price>
         </Details>
 
         <Specifications>
-          <SpecificationsCard name="250km/h" icon={SpeedSvg} />
-          <SpecificationsCard name="3.9s" icon={AccelerationSvg} />
-          <SpecificationsCard name="331 HP" icon={ForceSvg} />
-          <SpecificationsCard name="Elétrico" icon={EnergySvg} />
-          <SpecificationsCard name="Auto" icon={ExchangeSvg} />
-          <SpecificationsCard name="5 pessoas" icon={PeopleSvg} />
+          {car.accessories.map((accessory) => (
+            <SpecificationsCard
+              key={accessory.type}
+              name={accessory.name}
+              icon={getAccessoryIcon(accessory.type)}
+            />
+          ))}
         </Specifications>
 
-        <About>
-          Este é automóvel desportivo. Surgiu do lendário touro de lide
-          indultado na praça Real Maestranza de Sevilla. É um belíssimo carro
-          para quem gosta de acelerar.
-        </About>
+        <About>{car.about}</About>
       </Content>
 
       <Footer>

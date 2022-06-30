@@ -11,15 +11,20 @@ export const Container = styled.TouchableOpacity.attrs({
   justify-content: space-between;
   align-items: center;
   padding: 24px;
+  padding-right: 22px;
+
   margin-bottom: 16px;
 `;
 
-export const Details = styled.View``;
+export const Details = styled.View`
+  margin-right: 20px;
+`;
 
 export const Brand = styled.Text`
   font-size: ${RFValue(10)}px;
   color: ${({ theme }) => theme.colors.text_detail};
   font-family: ${({ theme }) => theme.fonts.secondary_500};
+  text-transform: uppercase;
 `;
 
 export const Model = styled.Text`
@@ -57,4 +62,5 @@ export const Type = styled.View`
 export const CarImage = styled.Image`
   height: ${RFValue(85)}px;
   width: ${RFValue(167)}px;
+  transform: rotateY(180deg);
 `;
