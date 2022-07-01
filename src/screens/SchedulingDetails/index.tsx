@@ -78,6 +78,15 @@ export function SchedulingDetails() {
       ...scheduleByCars.data.unavailable_dates,
       ...dates,
     ];
+    await api.post("schedules_byuser", {
+      user_id: 1,
+      car,
+      startDate: format(getPlatformDate(parseISO(dates[0])), "dd/MM/yyyy"),
+      endDate: format(
+        getPlatformDate(parseISO(dates[dates.length - 1])),
+        "dd/MM/yyyy"
+      ),
+    });
     api
       .put(`/schedules_bycars/${car.id}`, {
         id: car.id,
