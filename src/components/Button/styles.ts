@@ -18,6 +18,6 @@ export const Container = styled.TouchableOpacity<ButtonProps>`
 
 export const Title = styled.Text`
   font-size: 15px;
-  color: ${({ theme }) => theme.colors.shape};
+  color: ${({ theme }) => theme.colors.background_secondary};
   font-family: ${({ theme }) => theme.fonts.primary_500};
 `;
