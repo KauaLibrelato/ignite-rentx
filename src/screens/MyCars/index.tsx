@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { FlatList, StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import { BackButton } from "../../components/BackButton";
-import { Load } from "../../components/Load";
+import { LoadAnimation } from "../LoadAnimation";
 import { CarCard } from "../../components/CarCard";
 import { CarDTO } from "../../dtos/carDTOS";
 import { api } from "../../services/api";
@@ -76,7 +76,7 @@ export function MyCars() {
         <SubTitle>Conforto, segurança e praticidade.</SubTitle>
       </Header>
       {loading ? (
-        <Load />
+        <LoadAnimation />
       ) : (
         <Content>
           <Appointments>

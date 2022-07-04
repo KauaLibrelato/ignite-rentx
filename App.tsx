@@ -17,6 +17,7 @@ import { Routes } from "./src/routes";
 
 LogBox.ignoreLogs([
   "expo-app-loading is deprecated in favor of expo-splash-screen",
+  "ViewPropTypes will be removed from React Native.",
 ]);
 
 export default function App() {
