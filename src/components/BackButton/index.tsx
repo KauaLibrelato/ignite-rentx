@@ -14,9 +14,10 @@ import { TouchableOpacityProps } from "react-native";
 
 interface Props extends TouchableOpacityProps {
   color?: string;
+  disabled?: boolean;
 }
 
-export function BackButton({ color, ...rest }: Props) {
+export function BackButton({ color, disabled, ...rest }: Props) {
   const theme = useTheme();
 
   return (
