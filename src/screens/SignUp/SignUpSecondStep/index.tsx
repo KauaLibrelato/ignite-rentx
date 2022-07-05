@@ -17,6 +17,7 @@ import { BackButton } from "../../../components/BackButton";
 import { Bullet } from "../../../components/Bullet";
 import { Button } from "../../../components/Button";
 import { PasswordInput } from "../../../components/PasswordInput";
+import { api } from "../../../services/api";
 
 import {
   Container,
@@ -51,18 +52,30 @@ export function SignUpSecondStep() {
     navigation.goBack();
   }
 
-  function handleRegister() {
+  async function handleRegister() {
     if (!password || !passwordConfirm) {
       return Alert.alert("Informe a senha e a confirmação");
     }
     if (password != passwordConfirm) {
       return Alert.alert("A senhas não conferem");
     }
-    navigation.navigate("Confirmation", {
-      nextScreenRoute: "Login",
-      title: "Conta Criada",
-      message: "",
-    });
+
+    try {
+      await api.post("/users", {
+        name: user.name,
+        email: user.email,
+        driver_license: user.driverLicense,
+        password,
+      });
+      navigation.navigate("Confirmation", {
+        title: "Conta Criada!",
+        subtitle: `Agora é só fazer login${"\n"}e aproveitar`,
+        nextScreenRoute: "Login",
+      });
+    } catch (error: any) {
+      console.log({ error: error.response.data });
+      Alert.alert("Opa", "Não foi possível cadastrar.");
+    }
   }
   return (
     <KeyboardAvoidingView behavior="position" enabled>
