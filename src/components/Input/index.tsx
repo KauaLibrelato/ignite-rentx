@@ -11,15 +11,37 @@ interface Props extends TextInputProps {
 }
 
 export function Input({ iconName, value, ...rest }: Props) {
+  const [isFocused, setIsFocused] = useState(false);
+  const [isFilled, setIsFilled] = useState(false);
   const theme = useTheme();
+
+  function handleInputFocus() {
+    setIsFocused(true);
+  }
+
+  function handleInputBlur() {
+    setIsFocused(false);
+    setIsFilled(!!value);
+  }
 
   return (
     <Container>
-      <IconContainer>
-        <Feather color={theme.colors.text_detail} name={iconName} size={24} />
+      <IconContainer isFocused={isFocused}>
+        <Feather
+          color={
+            isFocused || isFilled ? theme.colors.main : theme.colors.text_detail
+          }
+          name={iconName}
+          size={24}
+        />
       </IconContainer>
 
-      <InputText {...rest} />
+      <InputText
+        onFocus={handleInputFocus}
+        onBlur={handleInputBlur}
+        isFocused={isFocused}
+        {...rest}
+      />
     </Container>
   );
 }

@@ -12,15 +12,23 @@ import {
   useNavigation,
   NavigationProp,
   ParamListBase,
+  useRoute,
 } from "@react-navigation/native";
+
+interface Params {
+  title: string;
+  message: string;
+  nextScreenRoute: string;
+}
 
 export function Confirmation() {
   const { width } = useWindowDimensions();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const theme = useTheme();
-
+  const route = useRoute();
+  const { title, message, nextScreenRoute } = route.params as Params;
   function handleBackToHome() {
-    navigation.navigate("Home");
+    navigation.navigate(nextScreenRoute);
   }
   return (
     <Container>
@@ -33,12 +41,9 @@ export function Confirmation() {
 
       <Content>
         <DoneSvg width={80} height={80} />
-        <Title>Carro alugado!</Title>
+        <Title>{title}</Title>
 
-        <Message>
-          Agora você só precisa ir{`\n`}até a concessionária da RENTX{`\n`}pegar
-          o seu automóvel.
-        </Message>
+        <Message>{message}</Message>
       </Content>
 
       <Footer>

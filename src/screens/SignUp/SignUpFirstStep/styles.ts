@@ -6,9 +6,22 @@ export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.background_primary};
 `;
 
-export const Header = styled.View`
+export const HeaderTop = styled.View`
   width: 100%;
-  margin-top: ${getStatusBarHeight() + 116}px;
+  margin-top: ${getStatusBarHeight() + 24}px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const Steps = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const HeaderLow = styled.View`
+  width: 100%;
+  margin-top: 48px;
 `;
 
 export const Title = styled.Text`
@@ -27,7 +40,16 @@ export const Subtitle = styled.Text`
 
 export const Content = styled.View`
   width: 100%;
-  margin: 64px 0;
+  margin: 64px 0 16px 0;
 `;
 
-export const Footer = styled.View``;
+export const Description = styled.Text`
+  margin-bottom: 24px;
+  font-size: 20px;
+  color: ${({ theme }) => theme.colors.title};
+  font-family: ${({ theme }) => theme.fonts.secondary_600};
+`;
+
+export const Footer = styled.View`
+  width: 100%;
+`;

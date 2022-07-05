@@ -95,7 +95,11 @@ export function SchedulingDetails() {
         unavailable_dates,
       })
       .then(() => {
-        navigation.navigate("Confirmation");
+        navigation.navigate("Confirmation", {
+          nextScreenRoute: "Home",
+          title: "Carro Alugado!",
+          message: `Agora você só precisa ir\naté a concessionária da RENTX`,
+        });
         setLoading(false);
       })
       .catch(() => {
