@@ -36,34 +36,31 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [data, setData] = useState<AuthState>({} as AuthState);
 
   async function signIn({ email, password }: SignInCredentials) {
-    try{
-      const response = await api.post('/sessions', {
+    try {
+      const response = await api.post("/sessions", {
         email,
-        password
+        password,
       });
-  
+
       const { token, user } = response.data;
       api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-      const userCollection = database.get<ModelUser>('users');
+      const userCollection = database.get<ModelUser>("users");
       await database.write(async () => {
-        await userCollection.create(( newUser ) => {
-          newUser.user_id = user.id,
-          newUser.name = user.name,
-          newUser.email = user.email,
-          newUser.driver_license = user.driver_license,
-          newUser.avatar = user.avatar,
-          newUser.token = token
-        })
+        await userCollection.create((newUser) => {
+          (newUser.user_id = user.id),
+            (newUser.name = user.name),
+            (newUser.email = user.email),
+            (newUser.driver_license = user.driver_license),
+            (newUser.avatar = user.avatar),
+            (newUser.token = token);
+        });
       });
-  
-      setData({ ...user, token });
 
-    }catch(error:any){
+      setData({ ...user, token });
+    } catch (error: any) {
       throw new Error(error);
     }
-  }
-
   }
   return (
     <AuthContext.Provider
