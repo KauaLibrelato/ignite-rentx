@@ -70,41 +70,29 @@ export function SchedulingDetails() {
   const route = useRoute();
   const { car, dates } = route.params as Params;
 
-  const rentTotal = Number(dates.length * car.rent.price);
+  const rentTotal = Number(dates.length * car.price);
 
   async function handleConfirmRental() {
     setLoading(true);
-    const scheduleByCars = await api.get(`/schedules_bycars/${car.id}`);
 
-    const unavailable_dates = [
-      ...scheduleByCars.data.unavailable_dates,
-      ...dates,
-    ];
-    await api.post("schedules_byuser", {
-      user_id: 1,
-      car,
-      startDate: format(getPlatformDate(parseISO(dates[0])), "dd/MM/yyyy"),
-      endDate: format(
-        getPlatformDate(parseISO(dates[dates.length - 1])),
-        "dd/MM/yyyy"
-      ),
-    });
-    api
-      .put(`/schedules_bycars/${car.id}`, {
-        id: car.id,
-        unavailable_dates,
+    await api
+      .post("/rentals", {
+        user_id: 1,
+        car_id: car.id,
+        start_date: new Date(),
+        end_date: new Date(),
+        total: rentTotal,
       })
       .then(() => {
         navigation.navigate("Confirmation", {
           nextScreenRoute: "Home",
-          title: "Carro Alugado!",
-          message: `Agora você só precisa ir\naté a concessionária da RENTX`,
+          title: "Carro alugado!",
+          message: `Agora você só precisa ir\naté a concessionária da RENTX\npegar o seu automóvel.`,
         });
-        setLoading(false);
       })
-      .catch(() => {
+      .catch((erro) => {
         setLoading(false);
-        Alert.alert("Não foi possível efetuar oagendamento");
+        Alert.alert("Não foi possível confirmar o agendamento.");
       });
   }
 
@@ -145,8 +133,8 @@ export function SchedulingDetails() {
           </Description>
 
           <Price>
-            <Period>{car.rent.period}</Period>
-            <Amount>{`R$ ${car.rent.price}`}</Amount>
+            <Period>{car.period}</Period>
+            <Amount>{`R$ ${car.price}`}</Amount>
           </Price>
         </Details>
 
@@ -189,7 +177,7 @@ export function SchedulingDetails() {
         <RentalPrice>
           <RentalPriceLabel>Total</RentalPriceLabel>
           <RentalPriceDetails>
-            <RentalPriceQuota>{`R$ ${car.rent.price} x ${dates.length} DIÁRIAS`}</RentalPriceQuota>
+            <RentalPriceQuota>{`R$ ${car.price} x ${dates.length} DIÁRIAS`}</RentalPriceQuota>
             <RentalPriceTotal>{`R$ ${rentTotal}`}</RentalPriceTotal>
           </RentalPriceDetails>
         </RentalPrice>

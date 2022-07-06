@@ -7,6 +7,7 @@ import {
   Alert,
 } from "react-native";
 import { useTheme } from "styled-components";
+import { useAuth } from "../../hooks/auth";
 import { Button } from "../../components/Button";
 import { Input } from "../../components/Input";
 import { PasswordInput } from "../../components/PasswordInput";
@@ -19,10 +20,11 @@ import {
   useRoute,
 } from "@react-navigation/native";
 
-export function Login() {
+export function SignIn() {
   const route = useRoute();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { signIn } = useAuth();
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
 
   function handleCreateNavigation() {
@@ -39,6 +41,7 @@ export function Login() {
       });
 
       await schema.validate({ email, password });
+      signIn({ email, password });
     } catch (error) {
       if (error instanceof Yup.ValidationError) {
         Alert.alert("Opa", error.message);
@@ -61,7 +64,7 @@ export function Login() {
           <Header>
             <Title>Estamos{`\n`}quase lá.</Title>
             <Subtitle>
-              Faça seu login para começar{`\n`}uma experiência incrível.
+              Faça seu SignIn para começar{`\n`}uma experiência incrível.
             </Subtitle>
           </Header>
 

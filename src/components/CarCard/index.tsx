@@ -34,8 +34,8 @@ export function CarCard({ data, onPress, ...rest }: Props) {
 
         <About>
           <Price>
-            <Period>{data.rent.period}</Period>
-            <Amount>{`R$ ${data.rent.price}`}</Amount>
+            <Period>{data.period}</Period>
+            <Amount>{`R$ ${data.price}`}</Amount>
           </Price>
 
           <Type>

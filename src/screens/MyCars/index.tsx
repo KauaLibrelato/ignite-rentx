@@ -90,7 +90,7 @@ export function MyCars() {
             showsVerticalScrollIndicator={false}
             renderItem={({ item }) => (
               <CarWrapper>
-                <CarCard key={item.id} data={item.car} />
+                <CarCard key={item.id} data={item.car} onPress={() => {}} />
                 <CarFooter>
                   <CarFooterTitle>Período</CarFooterTitle>
                   <CarFooterPeriod>

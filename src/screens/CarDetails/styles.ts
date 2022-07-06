@@ -3,7 +3,6 @@ import {
   getStatusBarHeight,
 } from "react-native-iphone-x-helper";
 import styled from "styled-components/native";
-import { RFValue } from "react-native-responsive-fontsize";
 
 export const Container = styled.View`
   background-color: ${({ theme }) => theme.colors.background_secondary};
@@ -53,6 +52,7 @@ export const Period = styled.Text`
   font-size: 10px;
   color: ${({ theme }) => theme.colors.text_detail};
   font-family: ${({ theme }) => theme.fonts.secondary_500};
+  text-transform: uppercase;
 `;
 
 export const Amount = styled.Text`

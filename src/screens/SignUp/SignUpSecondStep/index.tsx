@@ -69,8 +69,8 @@ export function SignUpSecondStep() {
       });
       navigation.navigate("Confirmation", {
         title: "Conta Criada!",
-        subtitle: `Agora é só fazer login${"\n"}e aproveitar`,
-        nextScreenRoute: "Login",
+        subtitle: `Agora é só fazer SignIn${"\n"}e aproveitar`,
+        nextScreenRoute: "SignIn",
       });
     } catch (error: any) {
       console.log({ error: error.response.data });

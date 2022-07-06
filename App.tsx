@@ -14,6 +14,7 @@ import theme from "./src/styles/theme";
 import AppLoading from "expo-app-loading";
 import { LogBox } from "react-native";
 import { Routes } from "./src/routes";
+import { AppProvider } from "./src/hooks";
 
 LogBox.ignoreLogs([
   "expo-app-loading is deprecated in favor of expo-splash-screen",
@@ -34,7 +35,9 @@ export default function App() {
   } else {
     return (
       <ThemeProvider theme={theme}>
-        <Routes />
+        <AppProvider>
+          <Routes />
+        </AppProvider>
       </ThemeProvider>
     );
   }
