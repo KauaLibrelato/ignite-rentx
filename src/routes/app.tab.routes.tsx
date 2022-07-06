@@ -5,7 +5,6 @@ import CarSvg from "../assets/car.svg";
 import PeopleSvg from "../assets/people.svg";
 
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Home } from "../screens/Home";
 import { MyCars } from "../screens/MyCars";
 import { Platform } from "react-native";
 import { useTheme } from "styled-components";
