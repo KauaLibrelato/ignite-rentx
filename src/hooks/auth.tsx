@@ -1,5 +1,7 @@
 import { useContext, useState, createContext, ReactNode } from "react";
+import { database } from "../database";
 import { api } from "../services/api";
+import { User as ModelUser } from "../database/model/User";
 
 interface User {
   id: string;
@@ -34,12 +36,34 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [data, setData] = useState<AuthState>({} as AuthState);
 
   async function signIn({ email, password }: SignInCredentials) {
-    const response = await api.post("/sessions", { email, password });
+    try{
+      const response = await api.post('/sessions', {
+        email,
+        password
+      });
+  
+      const { token, user } = response.data;
+      api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-    const { token, user } = response.data;
+      const userCollection = database.get<ModelUser>('users');
+      await database.write(async () => {
+        await userCollection.create(( newUser ) => {
+          newUser.user_id = user.id,
+          newUser.name = user.name,
+          newUser.email = user.email,
+          newUser.driver_license = user.driver_license,
+          newUser.avatar = user.avatar,
+          newUser.token = token
+        })
+      });
+  
+      setData({ ...user, token });
 
-    api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    setData({ token, user });
+    }catch(error:any){
+      throw new Error(error);
+    }
+  }
+
   }
   return (
     <AuthContext.Provider
